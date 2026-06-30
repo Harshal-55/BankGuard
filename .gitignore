@@ -2,11 +2,6 @@
 **/.env
 **/.env.*
 
-# Spring configuration files anywhere
-**/application.properties
-**/application.yml
-**/application.yaml
-
 # Common secret files
 **/secrets.*
 **/*secret*
