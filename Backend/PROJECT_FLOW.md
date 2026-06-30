@@ -306,7 +306,7 @@ It also configures:
 spring.application.name=apiGateway
 server.port=1001
 spring.main.web-application-type=reactive          # MUST be reactive for Cloud Gateway
-spring.config.import=configserver:http://localhost:8888
+spring.config.import=configserver:${CONFIG_SERVER_URL}
 spring.cloud.config.fail-fast=true                 # don't start if config server is down
 spring.r2dbc.url=r2dbc:mysql://localhost:3306/bankguard_auth   # reactive MySQL driver
 jwt.secret=...
@@ -376,7 +376,7 @@ Instead of every service carrying its own DB URLs, Eureka URLs, and gateway rout
 
 Every service has this line in its `application.properties` / `application.yml`:
 ```properties
-spring.config.import=configserver:http://localhost:8888
+spring.config.import=configserver:${CONFIG_SERVER_URL}
 ```
 On startup, the service contacts `localhost:8888`, asks "give me the config for `transactionService` profile `dev`," and the config server replies with the merged YAML pulled from Git.
 
@@ -498,10 +498,10 @@ TransactionDecisionResponse resp = webClient.post()
 ```properties
 spring.application.name=transactionService
 server.port=8089
-spring.config.import=configserver:http://localhost:8888
+spring.config.import=configserver:${CONFIG_SERVER_URL}
 spring.cloud.config.profile=dev
 spring.cloud.config.fail-fast=true
-eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+eureka.client.service-url.defaultZone=${EUREKA_URL}
 eureka.client.register-with-eureka=true
 ```
 
@@ -651,7 +651,7 @@ server.port=7002
 google.api.key=AQ.Ab8...                # Google Gemini key
 spring.datasource.url=jdbc:mysql://localhost:3306/decision_db
 spring.jpa.hibernate.ddl-auto=update    # Hibernate creates/updates schema
-eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+eureka.client.service-url.defaultZone=${EUREKA_URL}
 ```
 
 ---
